@@ -1,6 +1,7 @@
 package com.alexsolovev.testtask.UI.UI
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,7 +12,7 @@ import com.alexsolovev.testtask.UI.viewmodels.MainActivityViewModel
 import com.alexsolovev.testtask.UI.viewmodels.MainActivityViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),RecycleAdapter.OnItemClickListener {
 
     private lateinit var mViewModel: MainActivityViewModel
     private lateinit var mAdapter: RecycleAdapter
@@ -28,9 +29,15 @@ class MainActivity : AppCompatActivity() {
         mViewModel.getImages()
         recycle_view_images.layoutManager = GridLayoutManager(this, 2)
         mViewModel.mImageModels.observe(this, Observer { responce ->
-            mAdapter = RecycleAdapter(mViewModel.mImageModels.value!!)
+            mAdapter = RecycleAdapter(mViewModel.mImageModels.value!!,this)
             recycle_view_images.adapter = mAdapter
             mAdapter.notifyDataSetChanged()
         })
+
+
+    }
+
+    override fun onItemClick(position: Int) {
+        Toast.makeText(this,position.toString(),Toast.LENGTH_SHORT).show()
     }
 }
