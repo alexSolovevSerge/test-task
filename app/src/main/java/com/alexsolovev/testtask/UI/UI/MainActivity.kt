@@ -1,8 +1,9 @@
 package com.alexsolovev.testtask.UI.UI
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -28,7 +29,12 @@ class MainActivity : AppCompatActivity(),RecycleAdapter.OnItemClickListener {
             mainActivityViewModelFactory
         ).get(MainActivityViewModel::class.java)
         mViewModel.getImages()
-        recycle_view_images.layoutManager = GridLayoutManager(this, 2)
+        if(isTablet(this)){
+            recycle_view_images.layoutManager = GridLayoutManager(this, 3)
+        }else{
+            recycle_view_images.layoutManager = GridLayoutManager(this, 2)
+        }
+
         mViewModel.mImageModels.observe(this, Observer { responce ->
             mAdapter = RecycleAdapter(mViewModel.mImageModels.value!!,this)
             recycle_view_images.adapter = mAdapter
@@ -43,5 +49,11 @@ class MainActivity : AppCompatActivity(),RecycleAdapter.OnItemClickListener {
             putExtra("url",mAdapter.getItem(position).download_url)
         }
         startActivity(intent)
+    }
+
+    fun isTablet(context: Context): Boolean {
+        return ((context.resources.configuration.screenLayout
+                and Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE)
     }
 }
