@@ -31,6 +31,10 @@ class RecycleAdapter(
         return exampleList.size
     }
 
+    fun getItem(position: Int):ImageModel{
+        return exampleList[position]
+    }
+
     inner class ImagesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         val imageView: ImageView = itemView.card_image_view
