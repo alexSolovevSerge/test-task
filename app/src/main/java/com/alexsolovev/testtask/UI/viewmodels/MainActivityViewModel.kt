@@ -17,7 +17,6 @@ class MainActivityViewModel(private val repository: ImageModelRepository) : View
         viewModelScope.launch {
             val retult = repository.getImages()
             mImageModels.value = retult
-            Log.i("TAG","TAG")
         }
     }
 }

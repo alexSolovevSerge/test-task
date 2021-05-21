@@ -14,7 +14,7 @@ import com.alexsolovev.testtask.UI.viewmodels.MainActivityViewModel
 import com.alexsolovev.testtask.UI.viewmodels.MainActivityViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(),RecycleAdapter.OnItemClickListener {
+class MainActivity : AppCompatActivity(), RecycleAdapter.OnItemClickListener {
 
     private lateinit var mViewModel: MainActivityViewModel
     private lateinit var mAdapter: RecycleAdapter
@@ -29,24 +29,21 @@ class MainActivity : AppCompatActivity(),RecycleAdapter.OnItemClickListener {
             mainActivityViewModelFactory
         ).get(MainActivityViewModel::class.java)
         mViewModel.getImages()
-        if(isTablet(this)){
+        if (isTablet(this)) {
             recycle_view_images.layoutManager = GridLayoutManager(this, 3)
-        }else{
+        } else {
             recycle_view_images.layoutManager = GridLayoutManager(this, 2)
         }
-
         mViewModel.mImageModels.observe(this, Observer { responce ->
-            mAdapter = RecycleAdapter(mViewModel.mImageModels.value!!,this)
+            mAdapter = RecycleAdapter(mViewModel.mImageModels.value!!, this)
             recycle_view_images.adapter = mAdapter
             mAdapter.notifyDataSetChanged()
         })
-
-
     }
 
     override fun onItemClick(position: Int) {
-        val intent = Intent(this,ImageActivity::class.java).apply {
-            putExtra("url",mAdapter.getItem(position).download_url)
+        val intent = Intent(this, ImageActivity::class.java).apply {
+            putExtra("url", mAdapter.getItem(position).download_url)
         }
         startActivity(intent)
     }

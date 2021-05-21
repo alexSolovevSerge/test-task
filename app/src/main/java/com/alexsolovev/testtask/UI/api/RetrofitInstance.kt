@@ -6,7 +6,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
 
-
     private val retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(Constants.BASE_URL)
